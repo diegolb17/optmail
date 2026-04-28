@@ -1,0 +1,10 @@
+# Configuración de Base de Datos para Opt Media
+DB_USER=automatas
+DB_PASSWORD=Automatas2026*
+DB_HOST=76.13.229.191
+DB_PORT=5432
+DB_NAME=bases_de_datos
+
+# Cadena completa (por si Claude la prefiere así)
+DATABASE_URL=postgresql://automatas:Automatas2026*@76.13.229.191:5432/bases_de_datos
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opt Media Latam - Monitor de Leads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: "#f0fdf4",
+                            100: "#dcfce7",
+                            200: "#bbf7d0",
+                            300: "#86efac",
+                            400: "#4ade80",
+                            500: "#22c55e",
+                            600: "#16a34a",
+                            700: "#15803d",
+                            800: "#166534",
+                            900: "#14532d",
+                            950: "#052e16",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-br from-brand-950 via-green-950 to-brand-950 min-h-screen flex items-center justify-center p-6">
+    <div class="text-center max-w-3xl mx-auto">
+        <!-- Logos -->
+        <div class="flex items-center justify-center gap-8 mb-4">
+            <img src="imagenes/image.png" alt="Logo" class="h-12 w-auto opacity-90" />
+            <img src="imagenes/images.jpeg" alt="Logo" class="h-12 w-auto opacity-90" />
+        </div>
+
+        <!-- Línea decorativa -->
+        <div class="w-12 h-px bg-brand-600/40 mx-auto mb-12"></div>
+
+        <!-- Contador -->
+        <div class="relative">
+            <p class="text-9xl font-extralight tabular-nums text-brand-300 drop-shadow-lg leading-none mb-8" id="counter">
+                --
+            </p>
+
+            <p class="text-sm font-medium tracking-[0.15em] uppercase text-brand-400/60 max-w-xs mx-auto leading-relaxed">
+                Clientes potenciales que vienen de formulario al correo
+            </p>
+        </div>
+
+        <!-- Actualización -->
+        <p class="text-xs text-brand-700/50 mt-16 font-mono" id="updated">
+            Esperando datos...
+        </p>
+    </div>
+
+    <style>
+        #counter {
+            transition: opacity 0.3s ease;
+        }
+        #counter.loading {
+            opacity: 0.3;
+        }
+    </style>
+
+    <script>
+        const counterEl = document.getElementById("counter");
+        const updatedEl = document.getElementById("updated");
+
+        async function fetchLeads() {
+            counterEl.classList.add("loading");
+            try {
+                const res = await fetch("http://localhost:8000/api/leads");
+                const data = await res.json();
+                counterEl.textContent = data.total.toLocaleString();
+                updatedEl.textContent =
+                    "Última actualización: " + new Date().toLocaleTimeString();
+            } catch {
+                updatedEl.textContent = "Error al conectar con el servidor";
+            } finally {
+                counterEl.classList.remove("loading");
+            }
+        }
+
+        fetchLeads();
+        setInterval(fetchLeads, 5000);
+    </script>
+</body>
+</html>
