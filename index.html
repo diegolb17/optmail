@@ -73,7 +73,7 @@
         async function fetchLeads() {
             counterEl.classList.add("loading");
             try {
-                const res = await fetch("http://localhost:8000/api/leads");
+                const res = await fetch('https://optmail.onrender.com/api/leads');
                 const data = await res.json();
                 counterEl.textContent = data.total.toLocaleString();
                 updatedEl.textContent =
